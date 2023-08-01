@@ -33,6 +33,7 @@ const cadastrandoUsuario = (novousuario, novasenha) => {
     }
 }
 
+//Novamente, como não existe front para obtenão dos dados, os inputs são todos manuais.
 cadastrandoUsuario("lucas.gomes@modalgr.com.br", "bikeguaruja");
 
-console.log(dadosUsuarios);
+console.log(dadosUsuarios[dadosUsuarios.length - 1]);
