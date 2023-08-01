@@ -13,4 +13,8 @@ const validandoUsuarioESenha = (lista, chave, valor) => {
     }
 }
 
-console.log(validandoUsuarioESenha(dadosUsuarios, "usuario", login));
+if(validandoUsuarioESenha(dadosUsuarios, "usuario", login)) {
+    console.log(`Usuário logado com sucesso`);
+} else {
+    console.log(`Usuario ou senha incorreto(s)`);
+}
