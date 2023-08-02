@@ -2,14 +2,16 @@ const dadosUsuarios = require("./usuarios.json");
 
 //Como não teremos front end no Desafio, criei duas variáveis para simular a tentativa de login de um usuário.
 const login = "diogo.asenjo@modalgr.com.br";
-const senha = "diogo12";
+const senha = "diogo123";
 
+//Sugestão: separar as funções. 
 const validandoUsuarioESenha = (lista, chave, valor) => {
-    if (lista.find((item) => item[chave].includes(valor))) {
+    const usuarioExistente = lista.find((item) => item[chave].includes(valor)); //Evitar essa coisa gigante dentro do if para não confundir.
+    if (usuarioExistente) {
         let index = dadosUsuarios.findIndex((item) => item.usuario === valor);
-        if(dadosUsuarios[index].senha === senha) {
+        if(dadosUsuarios[index].senha === senha) { //Sugestão: tentar diminuir esse block de if.
             console.log(`Usuário logado com sucesso`);
-            return true;
+            return true; //Tentar usar as outras funções como base, primeiro os return falso e por último o true.
         } else {
             console.log(`Usuario ou senha incorreto(s)`);
             return false;
@@ -47,7 +49,7 @@ const verificacaoSenhaSegura = (senha) => {
     return true;
 }
 
-const cadastrandoUsuario = (novousuario, novasenha) => {
+const cadastrandoUsuario = (novousuario, novasenha) => { //Diminuir os else if;
     if(dadosUsuarios.find((item) => item.usuario.includes(novousuario))) {
         console.log(`Usuário já existente!`);
         return false;
