@@ -20,10 +20,36 @@ if(validandoUsuarioESenha(dadosUsuarios, "usuario", login)) {
     console.log(`Usuario ou senha incorreto(s)`);
 }
 
+const verificacaoSenhaSegura = (senha) => {
+    if(senha.length < 8) {
+        console.log(`A senha deve ter no mínimo 8 caracteres`); 
+        return false;
+    }
+    if((!/[a-z]/.test(senha))) {
+        console.log(`A senha deve ter ao menos uma letra minúscula`);
+        return false;
+    }
+    if((!/[A-Z]/.test(senha))) {
+        console.log(`A senha deve ter ao menos uma letra maiúscula`);
+        return false;
+    }
+    if((!/[0-9]/.test(senha))) {
+        console.log(`A senha deve ter ao menos um número`);
+        return false;
+    }
+    if((!/\W/.test(senha))) {
+        console.log(`A senha deve ter ao menos um caracter especial`);
+        return false;
+    }
+
+    return true;
+}
+
 const cadastrandoUsuario = (novousuario, novasenha) => {
     if(dadosUsuarios.find((item) => item.usuario.includes(novousuario))) {
         return console.log(`Usuário já existente!`);
-    } else if (dadosUsuarios.find((item) => novousuario.includes("@modalgr.com.br"))) {
+    } else if (dadosUsuarios.find((item) => novousuario.includes("@modalgr.com.br")) && 
+    verificacaoSenhaSegura(novasenha)) {
         return dadosUsuarios.push({
             usuario: novousuario,
             senha: novasenha,
@@ -37,3 +63,5 @@ const cadastrandoUsuario = (novousuario, novasenha) => {
 cadastrandoUsuario("lucas.gomes@modalgr.com.br", "bikeguaruja");
 
 console.log(dadosUsuarios[dadosUsuarios.length - 1]);
+
+console.log(verificacaoSenhaSegura("aaaaaaaaaA1"));
