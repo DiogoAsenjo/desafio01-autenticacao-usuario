@@ -47,21 +47,24 @@ const verificacaoSenhaSegura = (senha) => {
 
 const cadastrandoUsuario = (novousuario, novasenha) => {
     if(dadosUsuarios.find((item) => item.usuario.includes(novousuario))) {
-        return console.log(`Usuário já existente!`);
-    } else if (dadosUsuarios.find((item) => novousuario.includes("@modalgr.com.br")) && 
-    verificacaoSenhaSegura(novasenha)) {
-        return dadosUsuarios.push({
+        console.log(`Usuário já existente!`);
+        return false;
+    } else if(!verificacaoSenhaSegura(novasenha)) {
+        console.log(`Digite outra senha!`)
+        return false;
+    } else if(!novousuario.includes("@modalgr.com.br")) {
+        console.log(`Use um e-mail institucional @modalgr.com.br`);
+        return false;
+    } else {
+        dadosUsuarios.push({
             usuario: novousuario,
             senha: novasenha,
         });
-    } else {
-        return console.log("Digite um e-mail institucional válido");
+        return true;
     }
 }
 
 //Novamente, como não existe front para obtenão dos dados, os inputs são todos manuais.
-cadastrandoUsuario("lucas.gomes@modalgr.com.br", "bikeguaruja");
+cadastrandoUsuario("lucas.gomes@modalgr.com.br", "SenhaSegura@2023");
 
 console.log(dadosUsuarios[dadosUsuarios.length - 1]);
-
-console.log(verificacaoSenhaSegura("aaaaaaaaaA1"));
