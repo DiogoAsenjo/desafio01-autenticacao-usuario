@@ -4,7 +4,16 @@ const dadosUsuarios = require("./usuarios.json");
 const login = "diogo.asenjo@modalgr.com.br";
 const senha = "diogo123";
 
-//Sugestão: separar as funções. 
+//Sugestão: separar as funções.
+const validandoUsuario = (lista, chave, valor) => {
+    const usuarioValido = lista.find((item) => item[chave].includes(valor));
+    if(!usuarioValido) return false;
+   
+    return true;
+}
+
+console.log(validandoUsuario(dadosUsuarios, "usuario", login));
+
 const validandoUsuarioESenha = (lista, chave, valor) => {
     const usuarioExistente = lista.find((item) => item[chave].includes(valor)); //Evitar essa coisa gigante dentro do if para não confundir.
     if (usuarioExistente) {
