@@ -2,17 +2,30 @@ const dadosUsuarios = require("./usuarios.json");
 
 //Como não teremos front end no Desafio, criei duas variáveis para simular a tentativa de login de um usuário.
 const login = "diogo.asenjo@modalgr.com.br";
-const senha = "diogo123";
+const senha = "diogo23";
 
-//Sugestão: separar as funções.
 const validandoUsuario = (lista, chave, valor) => {
-    const usuarioValido = lista.find((item) => item[chave].includes(valor));
-    if(!usuarioValido) return false;
+    const usuarioInvalido = (!lista.find((item) => item[chave].includes(valor)));
+    if(usuarioInvalido) return false;
    
     return true;
 }
 
+const validandoSenha = (senha) => {
+    const usuarioInvalido = (!validandoUsuario(dadosUsuarios, "usuario", login));
+    
+    if(usuarioInvalido) return false;
+
+    const posicaoUsuario = dadosUsuarios.findIndex((item) => item.usuario === login);
+    const senhaIncorreta = dadosUsuarios[posicaoUsuario].senha !== senha;
+    
+    if(senhaIncorreta) return false;
+
+    return true;
+}
+
 console.log(validandoUsuario(dadosUsuarios, "usuario", login));
+console.log(validandoSenha(senha));
 
 const validandoUsuarioESenha = (lista, chave, valor) => {
     const usuarioExistente = lista.find((item) => item[chave].includes(valor)); //Evitar essa coisa gigante dentro do if para não confundir.
@@ -30,8 +43,6 @@ const validandoUsuarioESenha = (lista, chave, valor) => {
         return false;
     }
 }
-
-console.log(validandoUsuarioESenha(dadosUsuarios, "usuario", login));
 
 const verificacaoSenhaSegura = (senha) => {
     if(senha.length < 8) {
@@ -78,6 +89,6 @@ const cadastrandoUsuario = (novousuario, novasenha) => { //Diminuir os else if;
 }
 
 //Novamente, como não existe front para obtenão dos dados, os inputs são todos manuais.
-cadastrandoUsuario("lucas.gomes@modalgr.com.br", "SenhaSegura@2023");
+/* cadastrandoUsuario("lucas.gomes@modalgr.com.br", "SenhaSegura@2023");
 
-console.log(dadosUsuarios[dadosUsuarios.length - 1]);
+console.log(dadosUsuarios[dadosUsuarios.length - 1]); */
