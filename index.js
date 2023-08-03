@@ -24,44 +24,24 @@ const validandoSenha = (senha) => {
     return true;
 }
 
-console.log(validandoUsuario(dadosUsuarios, "usuario", login));
-console.log(validandoSenha(senha));
-
-const validandoUsuarioESenha = (lista, chave, valor) => {
-    const usuarioExistente = lista.find((item) => item[chave].includes(valor)); //Evitar essa coisa gigante dentro do if para não confundir.
-    if (usuarioExistente) {
-        let index = dadosUsuarios.findIndex((item) => item.usuario === valor);
-        if(dadosUsuarios[index].senha === senha) { //Sugestão: tentar diminuir esse block de if.
-            console.log(`Usuário logado com sucesso`);
-            return true; //Tentar usar as outras funções como base, primeiro os return falso e por último o true.
-        } else {
-            console.log(`Usuario ou senha incorreto(s)`);
-            return false;
-        }
-    } else {
-        console.log(`Usuario ou senha incorreto(s)`);
-        return false;
-    }
-}
-
-const verificacaoSenhaSegura = (senha) => {
-    if(senha.length < 8) {
+const verificacaoSenhaSegura = (senhaVerificada) => {
+    if(senhaVerificada.length < 8) {
         console.log(`A senha deve ter no mínimo 8 caracteres`); 
         return false;
     }
-    if((!/[a-z]/.test(senha))) {
+    if((!/[a-z]/.test(senhaVerificada))) {
         console.log(`A senha deve ter ao menos uma letra minúscula`);
         return false;
     }
-    if((!/[A-Z]/.test(senha))) {
+    if((!/[A-Z]/.test(senhaVerificada))) {
         console.log(`A senha deve ter ao menos uma letra maiúscula`);
         return false;
     }
-    if((!/[0-9]/.test(senha))) {
+    if((!/[0-9]/.test(senhaVerificada))) {
         console.log(`A senha deve ter ao menos um número`);
         return false;
     }
-    if((!/\W/.test(senha))) {
+    if((!/\W/.test(senhaVerificada))) {
         console.log(`A senha deve ter ao menos um caracter especial`);
         return false;
     }
@@ -69,26 +49,37 @@ const verificacaoSenhaSegura = (senha) => {
     return true;
 }
 
-const cadastrandoUsuario = (novousuario, novasenha) => { //Diminuir os else if;
-    if(dadosUsuarios.find((item) => item.usuario.includes(novousuario))) {
-        console.log(`Usuário já existente!`);
+const cadastroDeUsuario = (novoUsuario, novaSenha) => {
+    const usuarioJaExistente = validandoUsuario(dadosUsuarios, "usuario", novoUsuario);
+
+    if(usuarioJaExistente){
+        console.log(`Usuário já existe!`);
         return false;
-    } else if(!verificacaoSenhaSegura(novasenha)) {
-        console.log(`Digite outra senha!`)
-        return false;
-    } else if(!novousuario.includes("@modalgr.com.br")) {
-        console.log(`Use um e-mail institucional @modalgr.com.br`);
-        return false;
-    } else {
-        dadosUsuarios.push({
-            usuario: novousuario,
-            senha: novasenha,
-        });
-        return true;
     }
+
+    const emailInstitucional = novoUsuario.includes("@modalgr.com.br")
+
+    if(!emailInstitucional) {
+        console.log(`Use um email institucional!`);
+        return false;
+    }
+
+    const senhaInsegura = (!verificacaoSenhaSegura(novaSenha));
+
+    if(senhaInsegura) {
+        console.log(`Senha insegura, digite outra!`);
+        return false;
+    }
+
+    dadosUsuarios.push({
+        usuario: novoUsuario,
+        senha: novaSenha,
+    });
+    return true;
 }
 
-//Novamente, como não existe front para obtenão dos dados, os inputs são todos manuais.
-/* cadastrandoUsuario("lucas.gomes@modalgr.com.br", "SenhaSegura@2023");
-
-console.log(dadosUsuarios[dadosUsuarios.length - 1]); */
+console.log(validandoUsuario(dadosUsuarios, "usuario", login));
+console.log(validandoSenha(senha));
+console.log(verificacaoSenhaSegura("AAAAAA2@a"));
+cadastroDeUsuario("pedro.serafim@modalgr.com.br", "Aaaaaaaa1@");
+console.log(dadosUsuarios[dadosUsuarios.length - 1]);
