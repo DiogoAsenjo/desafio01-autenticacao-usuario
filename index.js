@@ -83,3 +83,5 @@ console.log(validandoSenha(senha));
 console.log(verificacaoSenhaSegura("AAAAAA2@a"));
 cadastroDeUsuario("pedro.serafim@modalgr.com.br", "Aaaaaaaa1@");
 console.log(dadosUsuarios[dadosUsuarios.length - 1]);
+
+console.log(dadosUsuarios);
