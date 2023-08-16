@@ -1,26 +1,23 @@
 const dadosUsuarios = require("./usuarios.json");
 
-//Como não teremos front end no Desafio, criei duas variáveis para simular a tentativa de login de um usuário.
-const login = "diogo.asenjo@modalgr.com.br";
-const senha = "diogo23";
-
 const validandoUsuario = (lista, chave, valor) => {
-    const usuarioInvalido = (!lista.find((item) => item[chave].includes(valor)));
-    if(usuarioInvalido) return false;
+    const usuarioValido = lista.find((item) => item[chave].includes(valor));
+    if(!usuarioValido) return false;
    
     return true;
 }
 
 const validandoSenha = (senha) => {
-    const usuarioInvalido = (!validandoUsuario(dadosUsuarios, "usuario", login));
+    const usuarioValido = validandoUsuario(dadosUsuarios, "usuario", login);
     
-    if(usuarioInvalido) return false;
+    if(!usuarioValido) return false;
 
     const posicaoUsuario = dadosUsuarios.findIndex((item) => item.usuario === login);
     const senhaIncorreta = dadosUsuarios[posicaoUsuario].senha !== senha;
     
     if(senhaIncorreta) return false;
 
+    console.log(`Usuário logado com sucesso!`);
     return true;
 }
 
@@ -64,9 +61,9 @@ const cadastroDeUsuario = (novoUsuario, novaSenha) => {
         return false;
     }
 
-    const senhaInsegura = (!verificacaoSenhaSegura(novaSenha));
+    const senhaSegura = verificacaoSenhaSegura(novaSenha);
 
-    if(senhaInsegura) {
+    if(!senhaSegura) {
         console.log(`Senha insegura, digite outra!`);
         return false;
     }
@@ -78,10 +75,12 @@ const cadastroDeUsuario = (novoUsuario, novaSenha) => {
     return true;
 }
 
-console.log(validandoUsuario(dadosUsuarios, "usuario", login));
-console.log(validandoSenha(senha));
-console.log(verificacaoSenhaSegura("AAAAAA2@a"));
-cadastroDeUsuario("pedro.serafim@modalgr.com.br", "Aaaaaaaa1@");
-console.log(dadosUsuarios[dadosUsuarios.length - 1]);
+//Como não teremos front end no Desafio, criei duas variáveis para simular a tentativa de login de um usuário.
+const login = "diogoasenjo@modalgr.com.br";
+const senha = "diogo123";
 
-console.log(dadosUsuarios);
+//Passando no console se o usuário conseguiria se logar com os dados inputados nas variáveis login e senha. Existe mensagem apenas para o login, caso algo esteja errado o retorno será apenas false. 
+console.log(validandoSenha(senha));
+
+//Cadastrando um novo usuário. É necessário um e-mail modalgr e uma senha que atenda aos requisitos. 
+cadastroDeUsuario("pedro.serafim@modalgr.com.br", "Aaaaaaa");
